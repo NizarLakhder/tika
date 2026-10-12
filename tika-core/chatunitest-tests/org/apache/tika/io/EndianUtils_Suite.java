@@ -1,0 +1,10 @@
+package org.apache.tika.io;
+
+import org.junit.runner.RunWith;
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectClasses;
+
+@RunWith(value = JUnitPlatform.class)
+@SelectClasses(value = { EndianUtils_getIntBE_22_0_Test.class, EndianUtils_getIntBE_23_0_Test.class, EndianUtils_getIntLE_20_0_Test.class, EndianUtils_getIntLE_21_0_Test.class, EndianUtils_getLongLE_28_0_Test.class, EndianUtils_getShortBE_16_0_Test.class, EndianUtils_getShortBE_17_0_Test.class, EndianUtils_getShortLE_12_0_Test.class, EndianUtils_getShortLE_13_0_Test.class, EndianUtils_getUByte_30_0_Test.class, EndianUtils_getUIntBE_26_0_Test.class, EndianUtils_getUIntBE_27_0_Test.class, EndianUtils_getUIntLE_24_1_Test.class, EndianUtils_getUIntLE_25_0_Test.class, EndianUtils_getUShortBE_18_0_Test.class, EndianUtils_getUShortBE_19_0_Test.class, EndianUtils_getUShortLE_14_1_Test.class, EndianUtils_getUShortLE_15_0_Test.class, EndianUtils_readIntLE_6_0_Test.class, EndianUtils_readIntME_8_1_Test.class, EndianUtils_readLongBE_10_2_Test.class, EndianUtils_readLongLE_9_2_Test.class, EndianUtils_readShortBE_1_2_Test.class, EndianUtils_readUE7_11_2_Test.class, EndianUtils_readUIntBE_5_0_Test.class, EndianUtils_readUIntLE_4_0_Test.class, EndianUtils_readUShortBE_3_1_Test.class, EndianUtils_readUShortLE_2_0_Test.class, EndianUtils_ubyteToInt_29_0_Test.class })
+public class EndianUtils_Suite {
+}

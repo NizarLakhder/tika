@@ -1,0 +1,34 @@
+package org.apache.tika.io;
+
+import org.apache.tika.io.EndianUtils;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import org.mockito.*;
+import org.junit.jupiter.api.*;
+import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.apache.tika.exception.TikaException;
+
+class EndianUtils_readLongLE_9_1_Test {
+
+    @Test
+    void testReadLongLE() throws IOException {
+        InputStream stream = new ByteArrayInputStream(new byte[] { 1, 2, 3, 4, 5, 6, 7, 8 });
+        long value = EndianUtils.readLongLE(stream);
+        assertEquals(0x0807060504030201L, value);
+    }
+}
+
+--------------------------------------------
+Error in EndianUtils_readLongLE_9_1_Test: line -1 : Annotation processing is enabled because one or more processors were found
+  on the class path. A future release of javac may disable annotation processing
+  unless at least one processor is specified by name (-processor), or a search
+  path is specified (--processor-path, --processor-module-path), or annotation
+  processing is enabled explicitly (-proc:only, -proc:full).
+  Use -Xlint:-options to suppress this message.
+  Use -proc:none to disable annotation processing.
+Error in EndianUtils_readLongLE_9_1_Test: line -1 : Supported source version 'RELEASE_17' from annotation processor 'org.apache.tika.annotation.TikaComponentProcessor' less than -source '21'
+Error in EndianUtils_readLongLE_9_1_Test: line 20 : unreported exception org.apache.tika.io.EndianUtils.BufferUnderrunException; must be caught or declared to be thrown

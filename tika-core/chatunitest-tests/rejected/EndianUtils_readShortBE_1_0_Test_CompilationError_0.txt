@@ -1,0 +1,43 @@
+package org.apache.tika.io;
+
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import org.apache.tika.exception.TikaException;
+import org.apache.tika.io.EndianUtils;
+import org.mockito.*;
+import org.junit.jupiter.api.*;
+import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+class EndianUtils_readShortBE_1_0_Test {
+
+    @Test
+    void testReadShortBE() throws IOException {
+        InputStream stream = new ByteArrayInputStream(new byte[] { 0x01, 0x02 });
+        when(stream.read()).thenReturn(0x01).thenReturn(0x02);
+        assertEquals(0x0201, EndianUtils.readShortBE(stream));
+    }
+
+    @Test
+    void testReadShortBE_Underflow() throws IOException {
+        InputStream stream = new ByteArrayInputStream(new byte[] { 0x01 });
+        when(stream.read()).thenReturn(0x01);
+        assertThrows(BufferUnderrunException.class, () -> EndianUtils.readShortBE(stream));
+    }
+}
+
+--------------------------------------------
+Error in EndianUtils_readShortBE_1_0_Test: line -1 : Annotation processing is enabled because one or more processors were found
+  on the class path. A future release of javac may disable annotation processing
+  unless at least one processor is specified by name (-processor), or a search
+  path is specified (--processor-path, --processor-module-path), or annotation
+  processing is enabled explicitly (-proc:only, -proc:full).
+  Use -Xlint:-options to suppress this message.
+  Use -proc:none to disable annotation processing.
+Error in EndianUtils_readShortBE_1_0_Test: line -1 : Supported source version 'RELEASE_17' from annotation processor 'org.apache.tika.annotation.TikaComponentProcessor' less than -source '21'
+Error in EndianUtils_readShortBE_1_0_Test: line 28 : cannot find symbol
+  symbol:   class BufferUnderrunException
+  location: class org.apache.tika.io.EndianUtils_readShortBE_1_0_Test

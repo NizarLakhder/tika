@@ -1,0 +1,109 @@
+#
+# Licensed to the Apache Software Foundation (ASF) under one or more
+# contributor license agreements.  See the NOTICE file distributed with
+# this work for additional information regarding copyright ownership.
+# The ASF licenses this file to You under the Apache License, Version 2.0
+# (the "License"); you may not use this file except in compliance with
+# the License.  You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+name: IFT3913 tache 2 - EndianUtils tests and mutation analysis
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  endianutils:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - uses: actions/checkout@v6
+      - name: Set up JDK 17
+        uses: actions/setup-java@v5
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+          cache: 'maven'
+      # tika-core needs tika-parent and tika-annotation-processor in the local repository
+      - name: Install the modules tika-core depends on
+        run: mvn -B -ntp install -pl tika-annotation-processor -am -Pfast
+      # original, ChatUniTest-generated and hand-written tests, with the usual Tika checks
+      # (enforcer, checkstyle, spotless) left on
+      - name: Run the EndianUtils tests
+        run: mvn -B -ntp -Pci test -pl tika-core -Dtest='EndianUtils*Test'
+      # One PIT run per test suite, so that the scores of the original, generated and
+      # hand-written tests can be compared. targetClasses comes from tika-core/pom.xml.
+      - name: Mutation analysis of EndianUtils with PIT
+        run: |
+          set -o pipefail
+          p=org.apache.tika.io
+          run_pit() {
+            name=$1
+            tests=$2
+            shift 2
+            mvn -B -ntp -Pci pitest:mutationCoverage -pl tika-core \
+              "-DtargetTests=$tests" "-DreportsDirectory=target/pit-reports/$name" \
+              -DfullMutationMatrix=true "$@" | tee "pit-$name.log"
+          }
+          run_pit 0-original "$p.EndianUtilsTest"
+          run_pit 1-generated-only "$p.EndianUtilsGeneratedTest"
+          run_pit 2-original-generated "$p.EndianUtilsTest,$p.EndianUtilsGeneratedTest"
+          run_pit 3-generated-corrected-only "$p.EndianUtilsGeneratedTest,$p.EndianUtilsGeneratedCorrectedTest"
+          run_pit 4-original-generated-corrected "$p.EndianUtilsTest,$p.EndianUtilsGeneratedTest,$p.EndianUtilsGeneratedCorrectedTest"
+          run_pit 5-all "$p.EndianUtils*Test" -DmutationThreshold=95
+      - name: Publish the mutation scores
+        if: always()
+        run: |
+          {
+            echo '### PIT - org.apache.tika.io.EndianUtils'
+            echo
+            echo '| Test suite | Mutants | Killed | Score | No coverage | Test strength |'
+            echo '|---|---|---|---|---|---|'
+            for f in pit-*.log; do
+              [ -f "$f" ] || continue
+              name=${f#pit-}
+              name=${name%.log}
+              gen=$(grep -E 'Generated [0-9]+ mutations' "$f" | tail -n 1 || true)
+              cov=$(grep -E 'Mutations with no coverage' "$f" | tail -n 1 || true)
+              # PIT stopped before printing its statistics
+              if [ -z "$gen" ] || [ -z "$cov" ]; then
+                echo "| $name | analysis failed | | | | |"
+                continue
+              fi
+              total=$(echo "$gen" | sed -E 's/.*Generated ([0-9]+) mutations.*/\1/')
+              killed=$(echo "$gen" | sed -E 's/.*Killed ([0-9]+) .*/\1/')
+              score=$(echo "$gen" | sed -E 's/.*\(([0-9]+%)\).*/\1/')
+              nocov=$(echo "$cov" | sed -E 's/.*no coverage ([0-9]+)\..*/\1/')
+              strength=$(echo "$cov" | sed -E 's/.*Test strength ([0-9]+%).*/\1/')
+              echo "| $name | $total | $killed | $score | $nocov | $strength |"
+            done
+          } >> "$GITHUB_STEP_SUMMARY"
+      - name: Upload the PIT reports
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: pit-reports-endianutils
+          path: tika-core/target/pit-reports/
+      # coverage measured while running the four EndianUtils test classes
+      - name: Upload the JaCoCo coverage report
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: jacoco-report-endianutils
+          path: tika-core/target/site/jacoco/

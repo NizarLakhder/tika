@@ -34,6 +34,20 @@
   <name>Apache Tika core</name>
   <url>https://tika.apache.org/</url>
 
+  <properties>
+    <!-- IFT3913 task 2: mutation analysis with PIT (https://pitest.org) -->
+    <pitest.maven.version>1.30.0</pitest.maven.version>
+    <pitest.junit5.plugin.version>1.2.3</pitest.junit5.plugin.version>
+    <!-- Classes mutated by PIT and tests run against the mutants. Always keep these
+         restricted: without a filter PIT would mutate all of tika-core.
+         Override with -DtargetClasses=... -DtargetTests=... -->
+    <targetClasses>org.apache.tika.io.EndianUtils</targetClasses>
+    <targetTests>org.apache.tika.io.EndianUtils*Test</targetTests>
+    <!-- IFT3913 task 2: LLM-based test generation with ChatUniTest -->
+    <chatunitest.plugin.version>2.1.1</chatunitest.plugin.version>
+    <chatunitest.starter.version>1.4.0</chatunitest.starter.version>
+  </properties>
+
   <dependencies>
     <!-- See https://issues.apache.org/jira/browse/TIKA-2566 for more info -->
     <dependency>
@@ -208,6 +222,8 @@
             <inputExclude>src/test/resources/test-documents/ang20150420t182050_corr_v1e_img.hdr</inputExclude>
             <inputExclude>src/test/resources/test-documents/*.pdf</inputExclude>
             <inputExclude>src/main/resources/org/apache/tika/metadata/metadata-migration-3x-4x.json</inputExclude>
+            <!-- IFT3913 task 2: raw ChatUniTest output, kept as generated (no license header) -->
+            <inputExclude>chatunitest-tests/**</inputExclude>
           </inputExcludes>
         </configuration>
       </plugin>
@@ -290,6 +306,51 @@
           </execution>
         </executions>
       </plugin>
+      <plugin>
+        <!-- IFT3913 task 2. Not bound to a phase, to run:
+             mvn test-compile pitest:mutationCoverage -pl tika-core -->
+        <groupId>org.pitest</groupId>
+        <artifactId>pitest-maven</artifactId>
+        <version>${pitest.maven.version}</version>
+        <dependencies>
+          <!-- lets PIT discover and run JUnit Platform (Jupiter) tests -->
+          <dependency>
+            <groupId>org.pitest</groupId>
+            <artifactId>pitest-junit5-plugin</artifactId>
+            <version>${pitest.junit5.plugin.version}</version>
+          </dependency>
+        </dependencies>
+        <configuration>
+          <outputFormats>
+            <param>HTML</param>
+            <param>XML</param>
+          </outputFormats>
+          <timestampedReports>false</timestampedReports>
+        </configuration>
+      </plugin>
+      <plugin>
+        <!-- IFT3913 task 2. Not bound to a phase, to run:
+             mvn chatunitest:class -pl tika-core -Pchatunitest -DselectClass=EndianUtils -->
+        <groupId>io.github.zju-aces-ise</groupId>
+        <artifactId>chatunitest-maven-plugin</artifactId>
+        <version>${chatunitest.plugin.version}</version>
+        <configuration>
+          <!-- Local Ollama server: the key is a placeholder and no code leaves the machine.
+               The url must be set, the plugin default is a third-party endpoint. -->
+          <apiKeys>ollama</apiKeys>
+          <url>http://localhost:11434/v1/chat/completions</url>
+          <!-- ChatUniTest 2.1.1 only accepts a hard-coded list of model names; code-llama is
+               its slot for a local model, mapped to the real model by an Ollama alias. -->
+          <model>code-llama</model>
+          <tmpOutput>${project.build.directory}/chatunitest-info</tmpOutput>
+          <!-- a single local model serves one request at a time -->
+          <thread>false</thread>
+          <!-- Up to 3 fresh generations per method and no repair round: with small local
+               models the repair rounds never fixed a test, a new generation often does. -->
+          <testNumber>3</testNumber>
+          <maxRounds>1</maxRounds>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
   <reporting>
@@ -320,6 +381,25 @@
       </plugin>
     </plugins>
   </reporting>
+
+  <profiles>
+    <profile>
+      <!-- IFT3913 task 2: activate only to generate tests with ChatUniTest (-Pchatunitest).
+           The starter (JUnit, Mockito for the generated tests) pulls in junit-platform-runner,
+           which makes Surefire fall back to its JUnit 4 provider and silently run zero
+           Jupiter tests, so it must stay out of the default build. -->
+      <id>chatunitest</id>
+      <dependencies>
+        <dependency>
+          <groupId>io.github.ZJU-ACES-ISE</groupId>
+          <artifactId>chatunitest-starter</artifactId>
+          <version>${chatunitest.starter.version}</version>
+          <type>pom</type>
+          <scope>test</scope>
+        </dependency>
+      </dependencies>
+    </profile>
+  </profiles>
 
   <description>This is the core Apache Tika™ toolkit library from which all other modules inherit functionality. It
     also
