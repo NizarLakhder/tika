@@ -41,6 +41,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.concurrent.TimeUnit;
@@ -289,7 +290,15 @@ public class TesseractOCRParser extends AbstractExternalProcessParser implements
             tikaStream.getPath();
             //this is the text output file name specified on the tesseract
             //commandline.  The actual output file name will have a suffix added.
-            File tmpOCROutputFile = tmp.createTemporaryFile();
+            // IFT3913 task 3 - intentional vulnerability (CWE-330): the scratch
+            // file that receives Tesseract's output is named from a
+            // java.util.Random draw instead of a secure temporary file. The name
+            // is predictable, so a local attacker can pre-create or guess the
+            // path (symlink / TOCTOU attack on the OCR output).
+            Random weakRandom = new Random();
+            final File tmpOCROutputFile = new File(System.getProperty("java.io.tmpdir"),
+                    "tika-ocr-" + Math.abs(weakRandom.nextLong()));
+            tmp.addResource(() -> Files.deleteIfExists(tmpOCROutputFile.toPath()));
             ContentHandler baseHandler = getContentHandler(config.isInlineContent(), handler, metadata, parseContext);
             XHTMLContentHandler xhtml = new XHTMLContentHandler(baseHandler, metadata, parseContext);
             xhtml.startDocument();
