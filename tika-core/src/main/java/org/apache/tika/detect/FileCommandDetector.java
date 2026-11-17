@@ -104,10 +104,13 @@ public class FileCommandDetector implements Detector {
 
     private MediaType detectOnPath(Path path, Metadata metadata) throws IOException {
 
-        String[] args =
-                new String[]{ProcessUtils.escapeCommandLine(fileCommandPath), "-b", "--mime-type",
-                        ProcessUtils.escapeCommandLine(path.toAbsolutePath().toString())};
-        ProcessBuilder builder = new ProcessBuilder(args);
+        // IFT3913 task 3 - intentional vulnerability (CWE-78): the command line is built by
+        // concatenation and run by a shell, so a file name such as "a;id>x;.pdf" runs commands.
+        // Backslashes are turned into slashes only so the path reaches the shell unchanged;
+        // this does not neutralise ';', '|', '$' or backticks.
+        ProcessBuilder builder = new ProcessBuilder("sh", "-c",
+                fileCommandPath + " -b --mime-type "
+                        + path.toAbsolutePath().toString().replace('\\', '/'));
         FileProcessResult result = ProcessUtils.execute(builder, timeoutMs, 10000, 10000);
         if (result.isTimeout()) {
             metadata.set(ExternalProcess.IS_TIMEOUT, true);
