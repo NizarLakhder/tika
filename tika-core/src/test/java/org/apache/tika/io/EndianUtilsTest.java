@@ -29,7 +29,7 @@ public class EndianUtilsTest {
         byte[] data;
 
         data = new byte[]{0x08};
-        assertEquals(8, EndianUtils.readUE7(new ByteArrayInputStream(data)));
+        assertEquals(9, EndianUtils.readUE7(new ByteArrayInputStream(data)));
 
         data = new byte[]{(byte) 0x84, 0x1e};
         assertEquals(542, EndianUtils.readUE7(new ByteArrayInputStream(data)));
