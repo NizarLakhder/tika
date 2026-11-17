@@ -1,0 +1,880 @@
+{
+ "tool": "semgrep 1.185.0",
+ "rulesets": [
+  "p/default",
+  "p/java"
+ ],
+ "state": "avant : workflow modifie et actions epinglees, sans les 7 vulnerabilites",
+ "files_scanned": 2264,
+ "findings_count": 82,
+ "findings": [
+  {
+   "rule": "dependabot-missing-cooldown",
+   "severity": "MEDIUM",
+   "cwe": [
+    "CWE-829"
+   ],
+   "path": ".github/dependabot.yml",
+   "line": 19
+  },
+  {
+   "rule": "run-shell-injection",
+   "severity": "ERROR",
+   "cwe": [
+    "CWE-78"
+   ],
+   "path": ".github/workflows/docker-release.yml",
+   "line": 72
+  },
+  {
+   "rule": "github-actions-mutable-action-tag",
+   "severity": "WARNING",
+   "cwe": [
+    "CWE-1357",
+    "CWE-353"
+   ],
+   "path": ".github/workflows/docker-release.yml",
+   "line": 91
+  },
+  {
+   "rule": "github-actions-mutable-action-tag",
+   "severity": "WARNING",
+   "cwe": [
+    "CWE-1357",
+    "CWE-353"
+   ],
+   "path": ".github/workflows/docker-release.yml",
+   "line": 195
+  },
+  {
+   "rule": "github-actions-mutable-action-tag",
+   "severity": "WARNING",
+   "cwe": [
+    "CWE-1357",
+    "CWE-353"
+   ],
+   "path": ".github/workflows/docker-release.yml",
+   "line": 206
+  },
+  {
+   "rule": "github-actions-mutable-action-tag",
+   "severity": "WARNING",
+   "cwe": [
+    "CWE-1357",
+    "CWE-353"
+   ],
+   "path": ".github/workflows/docker-snapshot.yml",
+   "line": 38
+  },
+  {
+   "rule": "github-actions-mutable-action-tag",
+   "severity": "WARNING",
+   "cwe": [
+    "CWE-1357",
+    "CWE-353"
+   ],
+   "path": ".github/workflows/docker-snapshot.yml",
+   "line": 39
+  },
+  {
+   "rule": "github-actions-mutable-action-tag",
+   "severity": "WARNING",
+   "cwe": [
+    "CWE-1357",
+    "CWE-353"
+   ],
+   "path": ".github/workflows/docker-snapshot.yml",
+   "line": 63
+  },
+  {
+   "rule": "github-actions-mutable-action-tag",
+   "severity": "WARNING",
+   "cwe": [
+    "CWE-1357",
+    "CWE-353"
+   ],
+   "path": ".github/workflows/docker-snapshot.yml",
+   "line": 66
+  },
+  {
+   "rule": "github-actions-mutable-action-tag",
+   "severity": "WARNING",
+   "cwe": [
+    "CWE-1357",
+    "CWE-353"
+   ],
+   "path": ".github/workflows/main-jdk17-windows-build-multi-locale.yml",
+   "line": 43
+  },
+  {
+   "rule": "github-actions-mutable-action-tag",
+   "severity": "WARNING",
+   "cwe": [
+    "CWE-1357",
+    "CWE-353"
+   ],
+   "path": ".github/workflows/main-jdk17-windows-build-multi-locale.yml",
+   "line": 45
+  },
+  {
+   "rule": "github-actions-mutable-action-tag",
+   "severity": "WARNING",
+   "cwe": [
+    "CWE-1357",
+    "CWE-353"
+   ],
+   "path": ".github/workflows/main-jdk17-windows-build.yml",
+   "line": 39
+  },
+  {
+   "rule": "github-actions-mutable-action-tag",
+   "severity": "WARNING",
+   "cwe": [
+    "CWE-1357",
+    "CWE-353"
+   ],
+   "path": ".github/workflows/main-jdk17-windows-build.yml",
+   "line": 43
+  },
+  {
+   "rule": "github-actions-mutable-action-tag",
+   "severity": "WARNING",
+   "cwe": [
+    "CWE-1357",
+    "CWE-353"
+   ],
+   "path": ".github/workflows/main-jdk21-build.yml",
+   "line": 35
+  },
+  {
+   "rule": "github-actions-mutable-action-tag",
+   "severity": "WARNING",
+   "cwe": [
+    "CWE-1357",
+    "CWE-353"
+   ],
+   "path": ".github/workflows/main-jdk21-build.yml",
+   "line": 37
+  },
+  {
+   "rule": "github-actions-mutable-action-tag",
+   "severity": "WARNING",
+   "cwe": [
+    "CWE-1357",
+    "CWE-353"
+   ],
+   "path": ".github/workflows/main-jdk25-build.yml",
+   "line": 35
+  },
+  {
+   "rule": "github-actions-mutable-action-tag",
+   "severity": "WARNING",
+   "cwe": [
+    "CWE-1357",
+    "CWE-353"
+   ],
+   "path": ".github/workflows/main-jdk25-build.yml",
+   "line": 37
+  },
+  {
+   "rule": "github-actions-mutable-action-tag",
+   "severity": "WARNING",
+   "cwe": [
+    "CWE-1357",
+    "CWE-353"
+   ],
+   "path": ".github/workflows/split-packages.yml",
+   "line": 31
+  },
+  {
+   "rule": "github-actions-mutable-action-tag",
+   "severity": "WARNING",
+   "cwe": [
+    "CWE-1357",
+    "CWE-353"
+   ],
+   "path": ".github/workflows/tache2.yml",
+   "line": 36
+  },
+  {
+   "rule": "github-actions-mutable-action-tag",
+   "severity": "WARNING",
+   "cwe": [
+    "CWE-1357",
+    "CWE-353"
+   ],
+   "path": ".github/workflows/tache2.yml",
+   "line": 38
+  },
+  {
+   "rule": "github-actions-mutable-action-tag",
+   "severity": "WARNING",
+   "cwe": [
+    "CWE-1357",
+    "CWE-353"
+   ],
+   "path": ".github/workflows/tache2.yml",
+   "line": 99
+  },
+  {
+   "rule": "github-actions-mutable-action-tag",
+   "severity": "WARNING",
+   "cwe": [
+    "CWE-1357",
+    "CWE-353"
+   ],
+   "path": ".github/workflows/tache2.yml",
+   "line": 106
+  },
+  {
+   "rule": "dynamic-urllib-use-detected",
+   "severity": "WARNING",
+   "cwe": [
+    "CWE-939"
+   ],
+   "path": ".skills/update-site-for-release/scripts/extract-tika-contribs.py",
+   "line": 94
+  },
+  {
+   "rule": "template-explicit-unescape",
+   "severity": "WARNING",
+   "cwe": [
+    "CWE-79"
+   ],
+   "path": "docs/supplemental-ui/partials/header-content.hbs",
+   "line": 5
+  },
+  {
+   "rule": "plaintext-http-link",
+   "severity": "WARNING",
+   "cwe": [
+    "CWE-319"
+   ],
+   "path": "release-tools/uat/test-files/testHTML.html",
+   "line": 26
+  },
+  {
+   "rule": "unsafe-reflection",
+   "severity": "WARNING",
+   "cwe": [
+    "CWE-470"
+   ],
+   "path": "tika-core/src/main/java/org/apache/tika/config/ServiceLoader.java",
+   "line": 196
+  },
+  {
+   "rule": "command-injection-process-builder",
+   "severity": "ERROR",
+   "cwe": [
+    "CWE-78"
+   ],
+   "path": "tika-core/src/main/java/org/apache/tika/detect/FileCommandDetector.java",
+   "line": 110
+  },
+  {
+   "rule": "saxparserfactory-disallow-doctype-decl-missing",
+   "severity": "ERROR",
+   "cwe": [
+    "CWE-611"
+   ],
+   "path": "tika-core/src/main/java/org/apache/tika/mime/MimeTypesReader.java",
+   "line": 223
+  },
+  {
+   "rule": "unencrypted-socket",
+   "severity": "WARNING",
+   "cwe": [
+    "CWE-319"
+   ],
+   "path": "tika-core/src/main/java/org/apache/tika/parser/NetworkParser.java",
+   "line": 68
+  },
+  {
+   "rule": "command-injection-process-builder",
+   "severity": "ERROR",
+   "cwe": [
+    "CWE-78"
+   ],
+   "path": "tika-core/src/main/java/org/apache/tika/parser/external/ExternalParser.java",
+   "line": 193
+  },
+  {
+   "rule": "xmlinputfactory-possible-xxe",
+   "severity": "WARNING",
+   "cwe": [
+    "CWE-611"
+   ],
+   "path": "tika-core/src/main/java/org/apache/tika/utils/XMLReaderUtils.java",
+   "line": 307
+  },
+  {
+   "rule": "unsafe-reflection",
+   "severity": "WARNING",
+   "cwe": [
+    "CWE-470"
+   ],
+   "path": "tika-core/src/main/java/org/apache/tika/utils/XMLReaderUtils.java",
+   "line": 828
+  },
+  {
+   "rule": "unsafe-reflection",
+   "severity": "WARNING",
+   "cwe": [
+    "CWE-470"
+   ],
+   "path": "tika-core/src/main/java/org/apache/tika/utils/XMLReaderUtils.java",
+   "line": 872
+  },
+  {
+   "rule": "command-injection-process-builder",
+   "severity": "ERROR",
+   "cwe": [
+    "CWE-78"
+   ],
+   "path": "tika-detectors/tika-detector-magika/src/main/java/org/apache/tika/detect/magika/MagikaDetector.java",
+   "line": 175
+  },
+  {
+   "rule": "command-injection-process-builder",
+   "severity": "ERROR",
+   "cwe": [
+    "CWE-78"
+   ],
+   "path": "tika-detectors/tika-detector-magika/src/main/java/org/apache/tika/detect/magika/MagikaDetector.java",
+   "line": 235
+  },
+  {
+   "rule": "command-injection-process-builder",
+   "severity": "ERROR",
+   "cwe": [
+    "CWE-78"
+   ],
+   "path": "tika-detectors/tika-detector-siegfried/src/main/java/org/apache/tika/detect/siegfried/SiegfriedDetector.java",
+   "line": 207
+  },
+  {
+   "rule": "formatted-sql-string",
+   "severity": "ERROR",
+   "cwe": [
+    "CWE-89"
+   ],
+   "path": "tika-eval/tika-eval-app/src/main/java/org/apache/tika/eval/app/db/H2Util.java",
+   "line": 70
+  },
+  {
+   "rule": "jdbc-sqli",
+   "severity": "WARNING",
+   "cwe": [
+    "CWE-89"
+   ],
+   "path": "tika-eval/tika-eval-app/src/main/java/org/apache/tika/eval/app/db/H2Util.java",
+   "line": 70
+  },
+  {
+   "rule": "unsafe-reflection",
+   "severity": "WARNING",
+   "cwe": [
+    "CWE-470"
+   ],
+   "path": "tika-eval/tika-eval-app/src/main/java/org/apache/tika/eval/app/db/JDBCUtil.java",
+   "line": 160
+  },
+  {
+   "rule": "formatted-sql-string",
+   "severity": "ERROR",
+   "cwe": [
+    "CWE-89"
+   ],
+   "path": "tika-eval/tika-eval-app/src/main/java/org/apache/tika/eval/app/db/JDBCUtil.java",
+   "line": 184
+  },
+  {
+   "rule": "jdbc-sqli",
+   "severity": "WARNING",
+   "cwe": [
+    "CWE-89"
+   ],
+   "path": "tika-eval/tika-eval-app/src/main/java/org/apache/tika/eval/app/reports/MarkdownSummaryWriter.java",
+   "line": 600
+  },
+  {
+   "rule": "unsafe-reflection",
+   "severity": "WARNING",
+   "cwe": [
+    "CWE-470"
+   ],
+   "path": "tika-metadata-schema/src/main/java/org/apache/tika/metadata/schema/SchemaGenerator.java",
+   "line": 98
+  },
+  {
+   "rule": "unsafe-reflection",
+   "severity": "WARNING",
+   "cwe": [
+    "CWE-470"
+   ],
+   "path": "tika-metadata-schema/src/main/java/org/apache/tika/metadata/schema/SchemaGenerator.java",
+   "line": 168
+  },
+  {
+   "rule": "command-injection-process-builder",
+   "severity": "ERROR",
+   "cwe": [
+    "CWE-78"
+   ],
+   "path": "tika-parsers/tika-parsers-extended/tika-parser-scientific-module/src/main/java/org/apache/tika/parser/gdal/GDALParser.java",
+   "line": 198
+  },
+  {
+   "rule": "unsafe-reflection",
+   "severity": "WARNING",
+   "cwe": [
+    "CWE-470"
+   ],
+   "path": "tika-parsers/tika-parsers-extended/tika-parser-sqlite3-module/src/main/java/org/apache/tika/parser/sqlite3/SQLite3DBParser.java",
+   "line": 76
+  },
+  {
+   "rule": "unsafe-reflection",
+   "severity": "WARNING",
+   "cwe": [
+    "CWE-470"
+   ],
+   "path": "tika-parsers/tika-parsers-ml/tika-parser-nlp-module/src/main/java/org/apache/tika/parser/ner/NamedEntityParser.java",
+   "line": 96
+  },
+  {
+   "rule": "unsafe-reflection",
+   "severity": "WARNING",
+   "cwe": [
+    "CWE-470"
+   ],
+   "path": "tika-parsers/tika-parsers-standard/tika-parsers-standard-modules/tika-parser-jdbc-commons/src/main/java/org/apache/tika/parser/jdbc/AbstractDBParser.java",
+   "line": 158
+  },
+  {
+   "rule": "jdbc-sqli",
+   "severity": "WARNING",
+   "cwe": [
+    "CWE-89"
+   ],
+   "path": "tika-parsers/tika-parsers-standard/tika-parsers-standard-modules/tika-parser-jdbc-commons/src/main/java/org/apache/tika/parser/jdbc/JDBCTableReader.java",
+   "line": 302
+  },
+  {
+   "rule": "command-injection-process-builder",
+   "severity": "ERROR",
+   "cwe": [
+    "CWE-78"
+   ],
+   "path": "tika-parsers/tika-parsers-standard/tika-parsers-standard-modules/tika-parser-microsoft-module/src/main/java/org/apache/tika/parser/microsoft/libpst/LibPstParser.java",
+   "line": 157
+  },
+  {
+   "rule": "command-injection-process-builder",
+   "severity": "ERROR",
+   "cwe": [
+    "CWE-78"
+   ],
+   "path": "tika-parsers/tika-parsers-standard/tika-parsers-standard-modules/tika-parser-microsoft-module/src/main/java/org/apache/tika/parser/microsoft/libpst/LibPstParser.java",
+   "line": 182
+  },
+  {
+   "rule": "unsafe-reflection",
+   "severity": "WARNING",
+   "cwe": [
+    "CWE-470"
+   ],
+   "path": "tika-parsers/tika-parsers-standard/tika-parsers-standard-modules/tika-parser-microsoft-module/src/main/java/org/apache/tika/parser/microsoft/onenote/fsshttpb/streamobj/DataElement.java",
+   "line": 53
+  },
+  {
+   "rule": "unsafe-reflection",
+   "severity": "WARNING",
+   "cwe": [
+    "CWE-470"
+   ],
+   "path": "tika-parsers/tika-parsers-standard/tika-parsers-standard-modules/tika-parser-microsoft-module/src/main/java/org/apache/tika/parser/microsoft/onenote/fsshttpb/streamobj/StreamObject.java",
+   "line": 76
+  },
+  {
+   "rule": "use-of-aes-ecb",
+   "severity": "WARNING",
+   "cwe": [
+    "CWE-327"
+   ],
+   "path": "tika-parsers/tika-parsers-standard/tika-parsers-standard-modules/tika-parser-miscoffice-module/src/main/java/org/apache/tika/parser/hwp/HwpTextExtractorV5.java",
+   "line": 346
+  },
+  {
+   "rule": "command-injection-process-builder",
+   "severity": "ERROR",
+   "cwe": [
+    "CWE-78"
+   ],
+   "path": "tika-parsers/tika-parsers-standard/tika-parsers-standard-modules/tika-parser-ocr-module/src/main/java/org/apache/tika/parser/ocr/TesseractOCRParser.java",
+   "line": 507
+  },
+  {
+   "rule": "command-injection-process-builder",
+   "severity": "ERROR",
+   "cwe": [
+    "CWE-78"
+   ],
+   "path": "tika-parsers/tika-parsers-standard/tika-parsers-standard-modules/tika-parser-ocr-module/src/main/java/org/apache/tika/parser/ocr/TesseractOCRParser.java",
+   "line": 731
+  },
+  {
+   "rule": "unsafe-reflection",
+   "severity": "WARNING",
+   "cwe": [
+    "CWE-470"
+   ],
+   "path": "tika-parsers/tika-parsers-standard/tika-parsers-standard-modules/tika-parser-pdf-module/src/main/java/org/apache/tika/parser/pdf/PDFParserConfig.java",
+   "line": 617
+  },
+  {
+   "rule": "command-injection-process-builder",
+   "severity": "ERROR",
+   "cwe": [
+    "CWE-78"
+   ],
+   "path": "tika-parsers/tika-parsers-standard/tika-parsers-standard-modules/tika-parser-pdf-module/src/main/java/org/apache/tika/renderer/pdf/poppler/PopplerRenderer.java",
+   "line": 152
+  },
+  {
+   "rule": "command-injection-process-builder",
+   "severity": "ERROR",
+   "cwe": [
+    "CWE-78"
+   ],
+   "path": "tika-parsers/tika-parsers-standard/tika-parsers-standard-modules/tika-parser-text-module/src/main/java/org/apache/tika/parser/strings/StringsParser.java",
+   "line": 201
+  },
+  {
+   "rule": "documentbuilderfactory-disallow-doctype-decl-missing",
+   "severity": "ERROR",
+   "cwe": [
+    "CWE-611"
+   ],
+   "path": "tika-pipes/tika-async-cli/src/main/java/org/apache/tika/async/cli/TikaConfigAsyncWriter.java",
+   "line": 78
+  },
+  {
+   "rule": "insecure-hostname-verifier",
+   "severity": "WARNING",
+   "cwe": [
+    "CWE-295"
+   ],
+   "path": "tika-pipes/tika-httpclient-commons/src/main/java/org/apache/tika/client/HttpClientFactory.java",
+   "line": 61
+  },
+  {
+   "rule": "disallow-old-tls-versions1",
+   "severity": "WARNING",
+   "cwe": [
+    "C",
+    "W",
+    "E",
+    "-",
+    "3",
+    "1",
+    "9",
+    "",
+    " ",
+    "C",
+    "l",
+    "e",
+    "a",
+    "r",
+    "t",
+    "e",
+    "x",
+    "t",
+    " ",
+    "T",
+    "r",
+    "a",
+    "n",
+    "s",
+    "m",
+    "i",
+    "s",
+    "s",
+    "i",
+    "o",
+    "n",
+    " ",
+    "o",
+    "f",
+    " ",
+    "S",
+    "e",
+    "n",
+    "s",
+    "i",
+    "t",
+    "i",
+    "v",
+    "e",
+    " ",
+    "I",
+    "n",
+    "f",
+    "o",
+    "r",
+    "m",
+    "a",
+    "t",
+    "i",
+    "o",
+    "n"
+   ],
+   "path": "tika-pipes/tika-httpclient-commons/src/main/java/org/apache/tika/client/HttpClientFactory.java",
+   "line": 276
+  },
+  {
+   "rule": "disallow-old-tls-versions1",
+   "severity": "WARNING",
+   "cwe": [
+    "C",
+    "W",
+    "E",
+    "-",
+    "3",
+    "1",
+    "9",
+    "",
+    " ",
+    "C",
+    "l",
+    "e",
+    "a",
+    "r",
+    "t",
+    "e",
+    "x",
+    "t",
+    " ",
+    "T",
+    "r",
+    "a",
+    "n",
+    "s",
+    "m",
+    "i",
+    "s",
+    "s",
+    "i",
+    "o",
+    "n",
+    " ",
+    "o",
+    "f",
+    " ",
+    "S",
+    "e",
+    "n",
+    "s",
+    "i",
+    "t",
+    "i",
+    "v",
+    "e",
+    " ",
+    "I",
+    "n",
+    "f",
+    "o",
+    "r",
+    "m",
+    "a",
+    "t",
+    "i",
+    "o",
+    "n"
+   ],
+   "path": "tika-pipes/tika-httpclient-commons/src/main/java/org/apache/tika/client/HttpClientFactory.java",
+   "line": 289
+  },
+  {
+   "rule": "use-of-sha1",
+   "severity": "WARNING",
+   "cwe": [
+    "CWE-328"
+   ],
+   "path": "tika-pipes/tika-httpclient-commons/src/main/java/org/apache/tika/client/HttpClientFactory.java",
+   "line": 466
+  },
+  {
+   "rule": "unencrypted-socket",
+   "severity": "WARNING",
+   "cwe": [
+    "CWE-319"
+   ],
+   "path": "tika-pipes/tika-pipes-core/src/main/java/org/apache/tika/pipes/core/PerClientServerManager.java",
+   "line": 291
+  },
+  {
+   "rule": "command-injection-process-builder",
+   "severity": "ERROR",
+   "cwe": [
+    "CWE-78"
+   ],
+   "path": "tika-pipes/tika-pipes-core/src/main/java/org/apache/tika/pipes/core/PerClientServerManager.java",
+   "line": 299
+  },
+  {
+   "rule": "unencrypted-socket",
+   "severity": "WARNING",
+   "cwe": [
+    "CWE-319"
+   ],
+   "path": "tika-pipes/tika-pipes-core/src/main/java/org/apache/tika/pipes/core/SharedServerManager.java",
+   "line": 219
+  },
+  {
+   "rule": "command-injection-process-builder",
+   "severity": "ERROR",
+   "cwe": [
+    "CWE-78"
+   ],
+   "path": "tika-pipes/tika-pipes-core/src/main/java/org/apache/tika/pipes/core/SharedServerManager.java",
+   "line": 278
+  },
+  {
+   "rule": "unsafe-reflection",
+   "severity": "WARNING",
+   "cwe": [
+    "CWE-470"
+   ],
+   "path": "tika-pipes/tika-pipes-core/src/main/java/org/apache/tika/pipes/core/config/ConfigStoreFactory.java",
+   "line": 114
+  },
+  {
+   "rule": "unencrypted-socket",
+   "severity": "WARNING",
+   "cwe": [
+    "CWE-319"
+   ],
+   "path": "tika-pipes/tika-pipes-core/src/main/java/org/apache/tika/pipes/core/server/PipesServer.java",
+   "line": 135
+  },
+  {
+   "rule": "bad-hexa-conversion",
+   "severity": "WARNING",
+   "cwe": [
+    "CWE-704"
+   ],
+   "path": "tika-pipes/tika-pipes-plugins/tika-pipes-atlassian-jwt/src/main/java/org/apache/tika/pipes/fetcher/atlassianjwt/AtlassianJwtGenerator.java",
+   "line": 86
+  },
+  {
+   "rule": "unsafe-reflection",
+   "severity": "WARNING",
+   "cwe": [
+    "CWE-470"
+   ],
+   "path": "tika-pipes/tika-pipes-plugins/tika-pipes-kafka/src/main/java/org/apache/tika/pipes/emitter/kafka/KafkaEmitter.java",
+   "line": 122
+  },
+  {
+   "rule": "unsafe-reflection",
+   "severity": "WARNING",
+   "cwe": [
+    "CWE-470"
+   ],
+   "path": "tika-pipes/tika-pipes-plugins/tika-pipes-kafka/src/main/java/org/apache/tika/pipes/iterator/kafka/KafkaPipesIterator.java",
+   "line": 91
+  },
+  {
+   "rule": "unsafe-reflection",
+   "severity": "WARNING",
+   "cwe": [
+    "CWE-470"
+   ],
+   "path": "tika-serialization/src/main/java/org/apache/tika/config/loader/ConfigLoader.java",
+   "line": 179
+  },
+  {
+   "rule": "no-new-privileges",
+   "severity": "WARNING",
+   "cwe": [
+    "CWE-732"
+   ],
+   "path": "tika-server/docker-build/docker-compose-tika-customocr.yml",
+   "line": 20
+  },
+  {
+   "rule": "writable-filesystem-service",
+   "severity": "WARNING",
+   "cwe": [
+    "CWE-732"
+   ],
+   "path": "tika-server/docker-build/docker-compose-tika-customocr.yml",
+   "line": 20
+  },
+  {
+   "rule": "no-new-privileges",
+   "severity": "WARNING",
+   "cwe": [
+    "CWE-732"
+   ],
+   "path": "tika-server/docker-build/docker-compose-tika-grobid.yml",
+   "line": 20
+  },
+  {
+   "rule": "writable-filesystem-service",
+   "severity": "WARNING",
+   "cwe": [
+    "CWE-732"
+   ],
+   "path": "tika-server/docker-build/docker-compose-tika-grobid.yml",
+   "line": 20
+  },
+  {
+   "rule": "no-new-privileges",
+   "severity": "WARNING",
+   "cwe": [
+    "CWE-732"
+   ],
+   "path": "tika-server/docker-build/docker-compose-tika-grobid.yml",
+   "line": 42
+  },
+  {
+   "rule": "writable-filesystem-service",
+   "severity": "WARNING",
+   "cwe": [
+    "CWE-732"
+   ],
+   "path": "tika-server/docker-build/docker-compose-tika-grobid.yml",
+   "line": 42
+  },
+  {
+   "rule": "unsafe-reflection",
+   "severity": "WARNING",
+   "cwe": [
+    "CWE-470"
+   ],
+   "path": "tika-server/tika-server-core/src/main/java/org/apache/tika/server/core/resource/TikaResource.java",
+   "line": 177
+  },
+  {
+   "rule": "command-injection-process-builder",
+   "severity": "ERROR",
+   "cwe": [
+    "CWE-78"
+   ],
+   "path": "tika-translate/src/main/java/org/apache/tika/language/translate/impl/MarianTranslator.java",
+   "line": 187
+  },
+  {
+   "rule": "command-injection-process-builder",
+   "severity": "ERROR",
+   "cwe": [
+    "CWE-78"
+   ],
+   "path": "tika-translate/src/main/java/org/apache/tika/language/translate/impl/MarianTranslator.java",
+   "line": 247
+  }
+ ]
+}
