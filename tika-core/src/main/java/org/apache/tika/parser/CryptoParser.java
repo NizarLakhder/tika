@@ -75,8 +75,14 @@ public abstract class CryptoParser extends DelegatingParser {
             Cipher cipher;
             if (provider != null) {
                 cipher = Cipher.getInstance(transformation, provider);
-            } else {
+            } else if (transformation != null && !transformation.isBlank()) {
                 cipher = Cipher.getInstance(transformation);
+            } else {
+                // IFT3913 task 3 - intentional vulnerability (CWE-327): when no
+                // transformation is configured, fall back to AES in ECB mode.
+                // ECB encrypts identical plaintext blocks to identical ciphertext
+                // blocks, leaking the structure of the decrypted document.
+                cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
             }
 
             Key key = context.get(Key.class);
