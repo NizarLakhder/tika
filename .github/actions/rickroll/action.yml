@@ -1,0 +1,45 @@
+#
+# Licensed to the Apache Software Foundation (ASF) under one or more
+# contributor license agreements.  See the NOTICE file distributed with
+# this work for additional information regarding copyright ownership.
+# The ASF licenses this file to You under the Apache License, Version 2.0
+# (the "License"); you may not use this file except in compliance with
+# the License.  You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+# IFT3913 task 3: reusable action that rickrolls the author of a failing test.
+name: Rickroll failing tests
+description: >
+  Reads the JUnit XML reports written by Surefire and Failsafe and, if a test failed,
+  rickrolls the run: error annotations, a summary that links to the video, and the list
+  of failing tests.
+inputs:
+  reports:
+    description: Space-separated glob patterns of the JUnit XML reports to read
+    required: false
+    default: '**/target/surefire-reports/TEST-*.xml **/target/failsafe-reports/TEST-*.xml'
+  video-id:
+    description: YouTube id of the video
+    required: false
+    default: dQw4w9WgXcQ
+outputs:
+  failed-tests:
+    description: Number of failing tests found in the reports
+    value: ${{ steps.rickroll.outputs.failed-tests }}
+runs:
+  using: composite
+  steps:
+    - id: rickroll
+      shell: bash
+      env:
+        REPORTS: ${{ inputs.reports }}
+        VIDEO_ID: ${{ inputs.video-id }}
+      run: python3 "$GITHUB_ACTION_PATH/rickroll.py"
