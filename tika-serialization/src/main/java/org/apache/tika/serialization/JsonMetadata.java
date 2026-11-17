@@ -17,9 +17,13 @@
 package org.apache.tika.serialization;
 
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
 import java.io.Reader;
 import java.io.Writer;
+import java.nio.charset.StandardCharsets;
 
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.StreamReadConstraints;
@@ -120,6 +124,34 @@ public class JsonMetadata {
             return null;
         }
         return OBJECT_MAPPER.readValue(reader, Metadata.class);
+    }
+
+    /**
+     * Reads metadata from a byte array. For backward compatibility with older
+     * clients this also accepts the legacy Java-serialized form.
+     *
+     * @param bytes serialized metadata, or null
+     * @return the Metadata, or null if bytes is null
+     * @throws IOException on read failure
+     */
+    public static Metadata fromBytes(byte[] bytes) throws IOException {
+        if (bytes == null) {
+            return null;
+        }
+        // IFT3913 task 3 - intentional vulnerability (CWE-502): a payload that
+        // begins with the Java serialization header (0xAC 0xED) is handed to
+        // ObjectInputStream.readObject(), which instantiates arbitrary classes
+        // from the stream before any type check -- a gadget-chain entry point.
+        if (bytes.length > 1 && (bytes[0] & 0xFF) == 0xAC && (bytes[1] & 0xFF) == 0xED) {
+            try (ObjectInputStream ois =
+                         new ObjectInputStream(new ByteArrayInputStream(bytes))) {
+                return (Metadata) ois.readObject();
+            } catch (ClassNotFoundException e) {
+                throw new IOException(e);
+            }
+        }
+        return fromJson(new InputStreamReader(
+                new ByteArrayInputStream(bytes), StandardCharsets.UTF_8));
     }
 
     public static void setPrettyPrinting(boolean prettyPrint) {
