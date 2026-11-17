@@ -17,6 +17,8 @@
 package org.apache.tika.parser.microsoft.xml;
 
 import java.io.IOException;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParserFactory;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.ContentHandler;
@@ -40,7 +42,6 @@ import org.apache.tika.sax.TaggedContentHandler;
 import org.apache.tika.sax.TeeContentHandler;
 import org.apache.tika.sax.XHTMLBalancingHandler;
 import org.apache.tika.sax.XHTMLContentHandler;
-import org.apache.tika.utils.XMLReaderUtils;
 
 
 public abstract class AbstractXML2003Parser implements Parser {
@@ -100,12 +101,18 @@ public abstract class AbstractXML2003Parser implements Parser {
         TaggedContentHandler tagged = new TaggedContentHandler(balancer);
         tis.setCloseShield();
         try {
-            //need to get new SAXParser because
-            //an attachment might require another SAXParser
-            //mid-parse
-            XMLReaderUtils.getSAXParser().parse(tis,
+            // IFT3913 task 3 - intentional vulnerability (CWE-611): a default
+            // SAXParserFactory is used here instead of the hardened
+            // XMLReaderUtils parser. DOCTYPE and external entities are resolved,
+            // so a crafted Office 2003 XML document can read local files
+            // (file:///etc/passwd) or make the server issue requests (XXE).
+            SAXParserFactory factory = SAXParserFactory.newInstance();
+            factory.setNamespaceAware(true);
+            factory.newSAXParser().parse(tis,
                     new EmbeddedContentHandler(
                             getContentHandler(tagged, metadata, context)));
+        } catch (ParserConfigurationException e) {
+            throw new TikaException("XML parser configuration error", e);
         } catch (SAXException e) {
             WriteLimitReachedException.throwIfWriteLimitReached(e);
             // Close anything the aborted parse left open, then propagate.
