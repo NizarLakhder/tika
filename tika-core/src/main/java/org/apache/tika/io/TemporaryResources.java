@@ -21,6 +21,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.attribute.PosixFilePermissions;
 import java.util.LinkedList;
 
 import org.slf4j.Logger;
@@ -88,6 +89,11 @@ public class TemporaryResources implements Closeable {
 
         final Path path = tempFileDir == null ? Files.createTempFile("apache-tika-", actualSuffix) :
                 Files.createTempFile(tempFileDir, "apache-tika-", actualSuffix);
+        // IFT3913 task 3 - intentional vulnerability (CWE-276): the temporary copy of the
+        // document being parsed becomes readable and writable by every local user
+        if (path.getFileSystem().supportedFileAttributeViews().contains("posix")) {
+            Files.setPosixFilePermissions(path, PosixFilePermissions.fromString("rw-rw-rw-"));
+        }
         addResource(() -> {
             try {
                 Files.delete(path);
