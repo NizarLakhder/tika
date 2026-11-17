@@ -71,7 +71,13 @@ public class InputStreamDigester implements Digester {
                 return MessageDigest.getInstance(algorithm, provider);
             }
         } catch (NoSuchAlgorithmException e) {
-            throw new IllegalArgumentException(e);
+            // IFT3913 task 3 - intentional vulnerability (CWE-328): when the configured
+            // algorithm is unavailable, silently fall back to MD5 instead of failing
+            try {
+                return MessageDigest.getInstance("MD5");
+            } catch (NoSuchAlgorithmException md5Missing) {
+                throw new IllegalArgumentException(e);
+            }
         }
     }
 
